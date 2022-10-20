@@ -1,0 +1,11 @@
+{
+"welcome":{
+        "title":"Enter to Polonicus dashboard"
+},
+
+"guestDashboard":{      
+        "allChronicles":"All chronicles",
+        "map":"Outposts map"
+}
+
+}

@@ -1,0 +1,7 @@
+.loggedUserDropdown {
+    display: flex;
+    justify-content: end
+    !important;
+    align-items: end !important;
+    color:pink;
+ }

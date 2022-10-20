@@ -1,0 +1,287 @@
+@import url('https://unpkg.com/leaflet@1.5.1/dist/leaflet.css');
+
+.btnPrimary{
+  background-color: #a52a2a ;
+}
+
+.box{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+
+.userForm{
+  margin:auto !important;
+  display:flex !important;
+  width:400px !important;
+}
+
+.homePage{
+  margin:auto !important;
+  display:flex !important;
+  flex-direction: column!important;
+  align-items: center!important;
+  width:1000px !important;
+  /* background: rgb(255, 255, 255); */
+  color:white;
+}
+
+
+.background{
+  background-image: radial-gradient(circle, #e34d4d, #d74443, #cb3a39,
+   #c03130, #b42726, #a62222, #991e1e, #8c191a, #7a191a,
+    #691819, #571718, #461616) !important;
+}
+
+
+.clean{
+  border: 0px none none !important;
+  /* background-color: transparent !important; */
+}
+
+.logoFont{
+  font-family: 'Patua One', Courier, sans-serif;
+  font-weight: 200;
+}
+
+.whiteBtn
+{
+  margin-top: 1em;
+  color:white ;
+  border: 1px solid white ;
+  padding:1em;
+  background: transparent;
+  border-radius: 4px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.whiteBtn:hover
+{
+ margin: 2em;
+ background-color: #991e1e;
+ color:white ;
+ border: 1px solid #e34d4d ;
+ box-shadow: -0px 0px 10px #461616;
+}
+
+
+.link
+{
+  margin-top: 1em;
+  color: white;
+  font-weight: 600;
+  transition: 0.5s;
+
+}
+.link:hover
+{
+  border-radius: 4px;
+  margin: 2em;
+  border: 1px solid white ;
+  padding:0.5em;
+}
+
+.cleanBtn{
+  border: none !important;
+  background-color: transparent !important;
+  padding: 1em 0px !important;
+}
+
+.frame{
+margin: 0  auto;
+  height: 650px;width: 1080px;
+  z-index: -1;
+  position: absolute;
+  top:286px;
+  left: 381px;
+  background-color: #461616;
+  border: 5px solid #a52a2a;
+  border-radius: 10px;
+}
+.frameText{
+  margin: 0  auto;
+    height: 100px;width: 100px;
+    z-index: -1;
+    position: absolute;
+    top:100px;
+    border: 4px solid #a52a2a;
+}
+.mapUpperDiv{
+  height: 200px;
+}
+.alignMapDiv{
+  margin: 0!important;
+  padding: 0!important;
+  display: flex;
+  justify-content: center;
+  color:#a52a2a !important;
+}
+
+/* //map */
+.map{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin:0 auto;
+  translate: 600px,600px;
+  width: 100%;
+}
+.mapContainer{
+  /* position: relative;
+  margin-top: 8em;
+  width: 100vw;
+  height: 100vh;
+ */
+ position: absolute;
+ /* margin-top: 8em; */
+ width: 94vw;
+ height: 100vh;
+ z-index: 98;
+ top:2.8em;
+ left: 0;
+ right:0;
+ margin: auto;
+}
+.mapFrameTopFill{
+  width: 100vw;
+  height: 110vh;
+  background-color: white;
+  position: absolute;
+  left:0;
+  top:-1em;
+}
+.mapFrame{
+  border-radius: 50px;
+  box-shadow: 0 0 0 100px white;
+  border-radius: 20px;
+  width: 94vw;
+  height: 100vh;
+  pointer-events:none;
+  top: 5em;
+  left:0;
+  right:0;
+  margin : 8px auto 0;
+
+  position: absolute;
+  z-index: 99;
+}
+.buttonGroup{
+  z-index: 100;
+  position: absolute;
+  top: 15em;
+  left:10em;
+}
+.buttonMap{
+  /* background-color: #991e1e !important; */
+  background-color:#fff !important;
+    color:white !important;
+
+  font-size: 3em;
+  transition: 200ms;
+}
+.buttonMap:hover{
+  /* color:white !important; */
+  background-color:#ddd!important;
+}
+.roundedMapDiv{
+  border-radius: 20px;
+  background-color: white;
+  width: 30vw;
+  height: 30vh;
+  position: absolute;
+  padding: 40px;
+  top: 0;
+  bottom:0;
+  margin:auto;
+
+  right: -1em;
+  z-index: 99;
+  box-shadow: -2px 2px 10px rgba(75, 75, 75, 0.404);
+  color:#461616;
+}
+
+
+/* NAVBAR */
+.navbar{
+  z-index: 100;
+  height: 5vh !important;
+  position: fixed !important;
+  visibility:visible;
+  opacity: 100%;
+  transition: 300ms;
+}
+.navBG{
+  opacity: 0%;
+  visibility: hidden;
+}
+
+
+
+/* DATEPICKER */
+.react-datepicker{
+  /* width: 300px; */
+  background-color: white !important;
+  /* border-radius: 10px !important; */
+}
+
+.react-datepicker__month-container{
+  /* margin: 0 15%; */
+}
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range{
+  background-color:#e34d4d!important;
+  color: #fff !important;
+}
+.react-datepicker__day--selected{
+  background-color:#e34d4d!important;
+  color: #fff !important;
+}
+.react-datepicker__triangle{
+  transform: translate(18rem);
+}
+
+
+.flexLeft{
+  display:flex !important;
+  align-items: start ;
+}
+
+
+/* FILTER BOX */
+
+.filterBox{
+  display:flex !important;
+  flex-direction: column;
+  align-items: start ;
+  margin: 1em;
+}
+
+/* Chronicles item  */
+
+.mr{
+  margin-right: 1em;
+}
+
+.itemContent{
+  width: 100rem !important;
+}
+
+/* FORMS */
+
+.bottomMargin{
+  padding-bottom: 2em;
+}
+.topMargin{
+  margin-top: 4em !important;
+}
+
+/* icon fit */
+
+.fitIcon{
+  position: relative !important;
+}
+
+.toggle{
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
