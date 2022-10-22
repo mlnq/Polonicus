@@ -17,5 +17,7 @@ namespace Polonicus_API.Models
         
         public int OutpostId { get; set; }
 
+        public string ImagePath { get; set; }
+
     }
 }

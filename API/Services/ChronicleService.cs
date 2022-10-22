@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Polonicus_API.Entities;
 using Polonicus_API.Exceptions;
@@ -15,11 +16,11 @@ namespace Polonicus_API.Services
         int Create(int outpostId, CreateChronicleDto dto);
         List<ChronicleDto> GetAllFromOutpost(int outpostId);
         List<ChronicleDto> GetAll();
-        void Remove(int outpostId, int chronicleId);
+        string Delete(int outpostId, int chronicleId);
         ChronicleDto GetById(int outpostId, int chronicleId);
         void Update(int outpostId, int chronicleId, ChronicleDto dto);
-        public ChronicleDto GetLastDate();
-
+        ChronicleDto GetLastDate();
+        Task AppendImage(int outpostId, int chronicleId, string imgPath);
     }
 
     public class ChronicleService : IChronicleService
@@ -44,29 +45,38 @@ namespace Polonicus_API.Services
             dbContext.Chronicles.Add(chronicleEntity);
             dbContext.SaveChanges();
 
+
             return chronicleEntity.Id;
+        }
+
+        public async Task AppendImage(int outpostId, int chronicleId, string imagePath)
+        {
+            var chronicle = GetChronicleById(outpostId,chronicleId);
+
+           chronicle.ImagePath = imagePath;
+           dbContext.SaveChanges();
         }
 
         public Outpost GetOutpostById(int outpostId)
         {
-            var institution = dbContext
+            var outpost = dbContext
                            .Outposts
                            .FirstOrDefault(o => o.Id == outpostId);
 
-            if (institution is null) throw new NotFoundException("institution not found");
+            if (outpost is null) throw new NotFoundException("outpost not found");
 
-            return institution;
+            return outpost;
         }
 
-        public Chronicle GetChronicleById(int institutionId, int chronicleId)
+        public Chronicle GetChronicleById(int outpostId, int chronicleId)
         {
-            var institution = GetOutpostById(institutionId);
+            var outpost = GetOutpostById(outpostId);
 
             var chronicle = dbContext
                                 .Chronicles
                                 .FirstOrDefault(c => (c.Id == chronicleId));
 
-            if (chronicle is null || chronicle.OutpostId != institutionId) throw new NotFoundException("Chronicle not found");
+            if (chronicle is null || chronicle.OutpostId != outpostId) throw new NotFoundException("Chronicle not found");
 
             return chronicle;
         }
@@ -117,26 +127,28 @@ namespace Polonicus_API.Services
             return chroniclesDtos;
         }
 
-        public void Remove(int outpostId, int chronicleId)
+        public string Delete(int outpostId, int chronicleId)
         {
-            var outpost = GetChronicleById(outpostId, chronicleId);
+            var chronicle = GetChronicleById(outpostId,chronicleId);
+            var imgUrl = chronicle.ImagePath;
 
             dbContext
                 .Chronicles
-                .Remove(outpost);
+                .Remove(chronicle);
             dbContext.SaveChanges();
+
+            return imgUrl;
         }
 
         public void Update(int outpostId,int chronicleId,ChronicleDto dto)
         {
             var chronicle = GetChronicleById(outpostId,chronicleId);
 
-            //var chronicleEntity = mapper.Map<Chronicle>(dto);
-
             chronicle.Name= dto.Name;
             chronicle.Description = dto.Description;
             dbContext.SaveChanges();
             
         }
+              
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Polonicus_API.Entities;
 
 namespace Polonicus_API.Migrations
 {
     [DbContext(typeof(PolonicusDbContext))]
-    partial class PolonicusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211214100340_Chronicle ImagePath")]
+    partial class ChronicleImagePath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,8 +61,8 @@ namespace Polonicus_API.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ImagePath")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

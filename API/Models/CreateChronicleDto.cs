@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace Polonicus_API.Models
         public string PublicationDate { get; set; }
 
         public int OutpostId { get; set; }
+
     }
 }

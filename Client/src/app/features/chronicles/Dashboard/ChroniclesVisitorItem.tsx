@@ -1,14 +1,14 @@
 import { ContentState, convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import { observer } from "mobx-react-lite";
 import React, { SyntheticEvent, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Button, Icon, Item, Label, Modal } from "semantic-ui-react";
+import { useParams } from "react-router-dom";
+import { Button, Icon, Image, Item, Label, Modal } from "semantic-ui-react";
 import Chronicle from "../../../models/chronicle";
 import { useStore } from "../../../stores/store";
 import TextView from "../../../utils/TextView";
 import { draftToMarkdown } from 'markdown-draft-js';
 import FileSaver from "file-saver";
-import {StateToPdfMake} from "../../../utils/stateToPdfMake";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -22,13 +22,13 @@ interface Props{
 export default observer(function ChroniclesVisitorItem({chronicle,target,chronicleDelete}:Props)
 {
   
-      const { chronicleId } = useParams<{ chronicleId: string }>();
       const [open, setOpen] = React.useState(false)
       const {chronicleStore} =useStore();
-
+      const {baseURL}=chronicleStore;
       const [editorState,setEditorState] = useState<any>
       (EditorState.createWithContent(ContentState.createFromText('Brak treści... uzupełnij dane edytując wpis')));
-  
+      const [t, i18n] = useTranslation('common');
+
 
       const handleGenerateMd = () => {
         const rawContent = convertToRaw(editorState.getCurrentContent());
@@ -39,16 +39,6 @@ export default observer(function ChroniclesVisitorItem({chronicle,target,chronic
           blob,
           `${chronicle.name}[${chronicleStore.dateFormat(chronicle)}].md`
         );
-      };
-
-      
-
-      const handleGeneratePdf = () => {
-       const rawContent = convertToRaw(editorState.getCurrentContent());
-        console.log('Pdf');
-
-        const state = new StateToPdfMake(editorState);
-        state.generate();
       };
 
 
@@ -67,13 +57,26 @@ export default observer(function ChroniclesVisitorItem({chronicle,target,chronic
     }
     }
 
-  // console.log(chronicle.id);
 return(
 <Item >
-            <Item.Image
-              size="tiny"
-              src="https://react.semantic-ui.com/images/wireframe/image.png"
-            ></Item.Image>
+
+              {
+                chronicle.imagePath === null || chronicle.imagePath === '0' ?
+                ( <Item.Image
+                    className="imageFlexSmall"
+                     circular 
+                    size="tiny"
+                    src="https://react.semantic-ui.com/images/wireframe/image.png"
+                  ></Item.Image>)
+                :
+                ( <Item.Image
+                className="imageFlexSmall"
+                  circular
+                 size="tiny"
+                  src={`${baseURL}/${chronicle.imagePath}`}
+                ></Item.Image>)
+              }
+            
 
             <Item.Content className="itemContent">
               <Item.Header>{chronicle.name}</Item.Header>
@@ -99,24 +102,26 @@ return(
                     setOpen(true);
                     viewText();
                    }}
-                   trigger={<Button>Wyświetl</Button>}
+                   trigger={<Button>{t("chronicleItem.display")}</Button>}
                  >
                    <Modal.Header>{chronicle.name}</Modal.Header>
-                   <Modal.Content image scrolling >
-                     {/* <Image size='medium' src='https://react.semantic-ui.com/images/wireframe/image.png' wrapped /> */}
-             
+                   <Modal.Content className="containerImage" image scrolling >
+                      {
+                        chronicle.imagePath === null || chronicle.imagePath === '0' ?
+                        (null)
+                        :
+                        (<Image className="imageCenter" size='medium' 
+                        src={`${baseURL}/${chronicle.imagePath}`} wrapped />)
+                      }
                      <TextView data={editorState}/>
-
                    </Modal.Content>
                    <Modal.Actions>
-                   <Button onClick={() => handleGeneratePdf()} primary>
-                       Zapisz jako Pdf <Icon name='download' />
-                     </Button>
+                
                     <Button onClick={() => handleGenerateMd()} primary>
-                       Zapisz jako Markdown <Icon name='download' />
+                       {t("chronicleItem.saveAs")} <Icon name='download' />
                      </Button>
                      <Button onClick={() => setOpen(false)} primary>
-                       Powrót <Icon name='chevron right' />
+                     {t("chronicleItem.return")} <Icon name='chevron right' />
                      </Button>
                    </Modal.Actions>
                  </Modal>

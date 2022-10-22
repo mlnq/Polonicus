@@ -1,11 +1,81 @@
 {
 "welcome":{
-        "title":"Enter to Polonicus dashboard"
+        "title":"Enter to Polonicus dashboard",
+        "welcome":"We bring our histories back again!",
+        "readAll":"Read chronicles",
+        "login":"Login In!",
+        "register":"Doesn't have you account ? Register!"
 },
 
 "guestDashboard":{      
         "allChronicles":"All chronicles",
         "map":"Outposts map"
-}
+},
 
+"filters":{
+        "filter":"Filters",
+        "date":"Date",
+        "chronicleTitle":"Chronicle title",
+        "city":"Town",
+        "outpostName":"Outpost name"
+},
+
+"map":{
+        "outpostName":"Outpost name: ",
+        "city":"Town: ",
+        "street":"Street: ",
+        "popup":"Check where does told stories come from!"
+},
+"navbar":{
+        "accountDetails":"Account details",
+        "myOutpostPanel":"My outpost dashboard",
+        "adminPanel":"Admin dashboard",
+        "logout":"Logout",
+        "chronicles":"All Chronicles",
+        "map":"Map"
+},
+"account":{
+        "email":"Email adress: ",
+        "age":"Age: ",
+        "role":"Role: ",
+        "accountDetails":"Account details"
+},
+"outpostItem":{
+        "chronicles":"Outposts chronicles",
+        "preview":"Preview",
+        "confirm":"Yes",
+        "deny":"No",
+        "confirmation":"Are you sure to delete this outpost?",
+        "deleteInfo":"Outpost deletion",
+        "delete":"Delete",
+        "add":"Add chronicle"
+
+},
+"chronicleItem":{
+        "chronicles":"Outposts chronicles",
+        "preview":"Preview",
+        "confirm":"Yes",
+        "deny":"No",
+        "confirmation":"Are you sure you want to delete chronicle? ",
+        "deleteInfo":"Deleting chronicle",
+        "delete":"Delete",
+        "add":"Add chronicle",
+        "formTitle":"Chronicle Title",
+        "formPhoto":"Add image",
+        "formIndicator":"Add image here",
+        "formIndicator2":"Drop here",
+        "edit":"Edit",
+        "display":"Display",
+        "saveAs":"Save as Markdown ",
+        "return":"Return "
+},
+"tools":{
+      "Lista":"Unordered list",
+      "ListaNumerowana":"Numbered list ",
+      "Cytat":"Quote",
+      "ClearLine":"Basic line"  
+},
+"chronicleEditor":{
+        
+}
 }

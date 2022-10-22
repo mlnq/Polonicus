@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
-import { Button, Card, Header, Icon, Search, Segment } from "semantic-ui-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import {  Card, Icon,  } from "semantic-ui-react";
 import { useStore } from "../../../stores/store";
 
 
 export default  observer( function OutpostFiler(){
-    const {outpostStore}= useStore();
+    const [t, i18n] = useTranslation('common');
 
+    const {outpostStore}= useStore();
     const [alphabetUpSort,setAlphabetUpSort]=useState(true);
     const [cityUpSort,setCityUpSort]=useState(true);
 
@@ -14,7 +16,7 @@ export default  observer( function OutpostFiler(){
         <Card>
         <div style={{display:'flex !important'}}>
             <div className="filterBox">
-                <h3 >Filtry </h3>
+                <h3 >{t("filters.filter")}</h3>
             </div>
            <Card.Description column >
 
@@ -32,7 +34,7 @@ export default  observer( function OutpostFiler(){
                         <Icon name="arrow down"/>
                        )
                    }
-                   Nazwy placówki
+                    {t("filters.outpostName")}
                </div>
                <div className="ui button basic fluid flexLeft" 
                     onClick={()=>{
@@ -48,7 +50,7 @@ export default  observer( function OutpostFiler(){
                         <Icon name="arrow down"/>
                        )
                    }
-                   Miejscowości
+                   {t("filters.city")}
                </div>
               
            </Card.Description>

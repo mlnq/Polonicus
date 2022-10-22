@@ -1,15 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from "react";
-import { useParams } from 'react-router';
+import  { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Button, Grid} from "semantic-ui-react";
-import { Outpost } from "../../../models/outpost";
 import { useStore } from "../../../stores/store";
-import OutpostDetails from "../details/OutpostDetails";
 import OutpostFilter from '../filter/OutpostFilter';
-import OutpostForm from "../form/OutpostForm";
 import OutpostList from "./OutpostList";
 import LoadingComponent from '../../../layout/LoadingComponent';
+import { useTranslation } from 'react-i18next';
 
 
 export default observer(function OutpostDashboard(){
@@ -18,6 +15,7 @@ export default observer(function OutpostDashboard(){
     const {outpostRegistry,loadOutposts,setLoadingInitial,allOutposts,clearOutpost,outposts} = outpostStore;
     const {isLogged,firstTime,setFirstTime}=userStore;
 
+    const [t, i18n] = useTranslation('common');
 
   
     useEffect(()=>{
@@ -51,7 +49,8 @@ export default observer(function OutpostDashboard(){
         <Grid>
             <Grid.Column width='4'>
 
-                <Button fluid as={Link} to="/outpostCreate" name="outpostCreate" icon='plus' negative content='Dodaj Placówke'/>
+                <Button fluid as={Link} to="/outpostCreate" name="outpostCreate" icon='plus' 
+                negative content={t("outpostItem.add")}/>
                 <OutpostFilter/>
 
             </Grid.Column>

@@ -4,5 +4,6 @@ export default interface Chronicle {
     description: any;
     publicationDate: Date;
     outpostId:number;
+    imagePath:string;
   }
   

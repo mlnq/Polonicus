@@ -8,8 +8,6 @@ import 'semantic-ui-css/semantic.min.css'
 import { store, StoreContext } from './app/stores/store';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import {I18nextProvider} from "react-i18next";
-import i18next from "i18next";
 import i18nconfig from "./config/i18n";
 import LoadingComponent from './app/layout/LoadingComponent';
 
@@ -31,8 +29,9 @@ ReactDOM.render(
   <StoreContext.Provider value={store}>
     <Router history={history}>
       
-
+    <Suspense fallback={<LoadingComponent />}>
           <App />
+    </Suspense>
 
 
     </Router>

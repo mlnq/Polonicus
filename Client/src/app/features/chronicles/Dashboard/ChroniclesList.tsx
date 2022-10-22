@@ -1,11 +1,9 @@
 import { observer } from "mobx-react-lite";
-import React, { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { useParams } from "react-router";
 import {
-  Button,
   Item,
   Segment,
-  SegmentGroup,
 } from "semantic-ui-react";
 import LoadingComponent from "../../../layout/LoadingComponent";
 import { useStore } from "../../../stores/store";
@@ -25,6 +23,7 @@ export default observer(function ChroniclesList() {
     let currentButton = parseInt(event.currentTarget.id);
     setTarget(currentButton);
     deleteChronicle(id,parseInt(outpostId));
+    
   }
 
 

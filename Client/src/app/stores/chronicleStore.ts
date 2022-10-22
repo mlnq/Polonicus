@@ -1,9 +1,11 @@
+import axios from "axios";
 import { makeAutoObservable ,runInAction} from "mobx";
 import agent from "../api/agent";
 import Chronicle from "../models/chronicle";
 
 export default class ChronicleStore{
 
+    public baseURL=   axios.defaults.baseURL+"/PhotoStorage";
     chronicleRegistry: Map<number,Chronicle>= new Map<number,Chronicle>();
     selectedChronicle: Chronicle | undefined = undefined;
     loading = false;
@@ -12,6 +14,7 @@ export default class ChronicleStore{
     allChronicles= false;
 
     lastChronicle:Chronicle | undefined= undefined;
+
 
     constructor(){
         makeAutoObservable(this);
@@ -96,9 +99,9 @@ export default class ChronicleStore{
         let chronicle = this.chronicleRegistry.get(id);
         
         // console.log(`Taki obiekt w promise istnieje id:${id}, outpostId: ${chronicle!.name}`);
-        //EDIT zwaraca dane  do forma
+        //EDIT zwraca dane  do forma
         if(chronicle && outpostId==this.selectedOutpostId){
-            console.log('laduje no')
+            console.log('ladowanie danych')
             this.selectedChronicle = chronicle;
             return chronicle;
         }
@@ -106,12 +109,8 @@ export default class ChronicleStore{
             this.loadingInitial = true;
             try{
                 this.setSelectedOutpostId(outpostId);
-                console.log("KRAWCZYK KRÓL:"+chronicle);
                 chronicle = await agent.Chronicles.details(id,outpostId);
-                console.log("KRAWCZYK KRÓL:"+chronicle);
-                
                 this.setChronicle(chronicle);
-
                 this.selectedChronicle = chronicle;
                 this.setLoadingInitial(false);
                 return chronicle;
@@ -145,7 +144,6 @@ export default class ChronicleStore{
 
     loadChronicles = async (outpostId:number) =>{
         this.loadingInitial = true;
-        ///yyy sprawdzenie id 1 elementu.. ale jakies dziwne bardzo xd
         if(! this.checkOutpostId(outpostId)) this.chronicleRegistry.clear();
         try{
             const chronicleLoad = await agent.Chronicles.list(outpostId);
@@ -211,7 +209,6 @@ export default class ChronicleStore{
     createChronicle = async (chronicle: Chronicle,outpostId:number)=>{
         this.loading =true;
         try{
-            //@TODO PROBLEM Z OSTATNIM IDEKSEM PRZED ZALADOWANIEM ew. przerobić na UUID z id z backendu (przerobic backend na przyjmowanie string id)
 
             var response = await agent.Chronicles.create(chronicle,outpostId);
 
@@ -222,6 +219,7 @@ export default class ChronicleStore{
                 this.setChronicle(chronicle);
                 this.loading=false;
             });
+            return response.id;
         }
         catch(e){
             runInAction(() => {
@@ -230,6 +228,38 @@ export default class ChronicleStore{
             
         }
 
+    }
+    uploadImage =async (file: Blob,outpostId:number,chronicleId:number)=>
+    {
+        try{
+            const response = await agent.Chronicles.uploadImage(file,outpostId,chronicleId);
+            const photo = response.data;
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+    createChronicleWithImage =async(file: Blob,chronicle: Chronicle,outpostId:number)=>
+    {
+        this.loading =true;
+        try{
+            var response = await agent.Chronicles.create(chronicle,outpostId);
+
+            runInAction(() => {
+                chronicle.id = response.id;
+                this.uploadImage(file,outpostId,chronicle.id);
+                this.chronicleRegistry.set(chronicle.id,chronicle);
+                this.setChronicle(chronicle);
+                this.loading=false;
+            });
+            return response.id;
+        }
+        catch(e){
+            runInAction(() => {
+                this.loading=false;
+            });
+            
+        }
     }
     
 }

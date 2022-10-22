@@ -70,7 +70,6 @@ namespace Polonicus_API.Services
 
         public void Delete(int id)
         {
-            logger.LogError($"Outpost with id: {id} DELETE action invoked");
             
             var outpost = dbContext
                 .Outposts
@@ -116,12 +115,9 @@ namespace Polonicus_API.Services
         {
             var outpost = dbContext.Outposts.Include(o=> o.Address).FirstOrDefault(e => e.Id == id);
 
-            //var outpostEdit = mapper.Map<Outpost>(dto);
 
             outpost.Name = dto.Name;
             outpost.Description = dto.Description;
-
-            /*outpost = outpostEdit;*/
 
             dbContext.SaveChanges();
         }

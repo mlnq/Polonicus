@@ -1,9 +1,10 @@
+import axios from "axios";
 import { ContentState, convertFromRaw, Editor, EditorState } from "draft-js";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { Button, Card } from "semantic-ui-react";
+import { Button, Card, Image } from "semantic-ui-react";
 import LoadingComponent from "../../../layout/LoadingComponent";
 import { store, useStore } from "../../../stores/store";
 import TextEditor from "../../../utils/TextEditor";
@@ -16,7 +17,7 @@ export default observer (function OutpostDetails()
     const history = useHistory();
 
     const {chronicleStore,userStore} = useStore();
-    const {selectedChronicle,loadChronicle} = chronicleStore;
+    const {selectedChronicle,loadChronicle,baseURL} = chronicleStore;
     const {isLogged} = userStore;
     const {id} = useParams<{id: string}>();
     const {outpostId} = useParams<{outpostId: string}>();
@@ -69,44 +70,49 @@ export default observer (function OutpostDetails()
     // obj= storedState;
     // const contentState = convertFromRaw(obj);
     // const editorStatee = EditorState.createWithContent(contentState);
-    
-    return (
-        <Card fluid>
-            <Card.Content>
-                    <Card.Header>
-                        {selectedChronicle?.name}
-                    </Card.Header>
-                    <Card.Meta>
-                        {'Kartka z kalendarza dzień: '+ DateString}
-                    </Card.Meta>
-                    <Card.Description>
-                        {
-                        selectedChronicle.description ?
-                        <TextView data={editorState}/>
-                        :null
-                        }
-                        {/* {selectedChronicle?.description} */}
-                    </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-                <Button.Group>
-                        {
-                            isLogged? 
-                            (
-                                <>
-                            <Button as={Link} to={`/outposts/${outpostId}/editChronicle/${id}`}  basic color='red' content='Edit'/>
-                                </>
-                            )
-                            :
-                            (null)
-                        }
-                        <Button onClick={()=>history.goBack()} basic color='grey' content='Powrót'/>
-                </Button.Group>
-            </Card.Content>
-            
 
-           
-            {/* <TextTestEditor ></TextTestEditor> */}
-        </Card>
+    return (
+      <Card fluid>
+        <Card.Content>
+          <Card.Header>{selectedChronicle?.name}</Card.Header>
+          <Card.Meta>{"Kartka z kalendarza dzień: " + DateString}</Card.Meta>
+
+            {
+                selectedChronicle?.imagePath &&
+                (<img className="ui big image imageFlex"
+                src={`${baseURL}/${selectedChronicle?.imagePath}`}
+              />)
+            }
+          
+
+          <Card.Description>
+            {selectedChronicle.description ? (
+              <TextView data={editorState} />
+            ) : null}
+            {/* {selectedChronicle?.description} */}
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <Button.Group>
+            {isLogged ? (
+              <>
+                <Button
+                  as={Link}
+                  to={`/outposts/${outpostId}/editChronicle/${id}`}
+                  basic
+                  color="red"
+                  content="Edit"
+                />
+              </>
+            ) : null}
+            <Button
+              onClick={() => history.goBack()}
+              basic
+              color="grey"
+              content="Powrót"
+            />
+          </Button.Group>
+        </Card.Content>
+      </Card>
     );
 });

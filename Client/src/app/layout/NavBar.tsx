@@ -1,13 +1,16 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
-import { Button, Container, Dropdown, Icon, Menu, Transition } from "semantic-ui-react";
+import { Container, Dropdown, Icon, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import { useLanguageChange } from "../utils/useLanguageChange";
 
 
 
 export default observer(function NavBar(){
+
+    const [t, i18n] = useTranslation('common');
 
     const {userStore,utilsStore} = useStore();
     const {accountDetails,logout}=userStore;
@@ -28,52 +31,78 @@ export default observer(function NavBar(){
         }
     },[])
 
+    const options = [
+        { key: 1,flag: 'pl',value: 'pl' ,id:'pl'},
+        { key: 3, flag: 'us',value:'en',id:'en' },
+        { key: 3, flag: 'ru',value:'ru',id:'ru' },
+      ]
+    
+     const handleDropDownSelect = (event:any, data:any) => {
+        changeLanguage(event.currentTarget.id);
+       };
 
-    return(
-        <>
-        <Menu inverted visible={showNav} className={`navbar ${!showNav && 'navBG'}`} fixed="top" >
-            <Container>
-                <Menu.Item as={NavLink} to="/" exact header>
-                    <img src="/assets/logo.svg" alt="logo" style={{marginRight: 10 }} />
-                    <span className='logoFont'>Polonicus App</span>
-                </Menu.Item>
-                {/* <Menu.Item as={NavLink} to="/outposts" name="Wszystkie Placówki"/> */}
+    return (
+      <>
+        <Menu
+          inverted
+          visible={showNav}
+          className={`navbar ${!showNav && "navBG"}`}
+          fixed="top"
+        >
+          <Container>
+            <Menu.Item as={NavLink} to="/" exact header>
+              <img
+                src="/assets/logo.svg"
+                alt="logo"
+                style={{ marginRight: 10 }}
+              />
+              <span className="logoFont">Polonicus App</span>
+            </Menu.Item>
 
-                <Menu.Item as={NavLink} to="/chronicles" name="Wszystkie Kroniki"/>
-                <Menu.Item as={NavLink} to="/outposts/map" name="Mapa"/>
-               
+            <Menu.Item as={NavLink} to="/chronicles" name={t("navbar.chronicles")}/>
+            <Menu.Item as={NavLink} to="/outposts/map" name={t("navbar.map")} />
 
-                {/* <Dropdown.Menu>
-                    <Dropdown.Item text={currentLanguage} value={currentLanguage}/>
-                </Dropdown.Menu> */}
-
-                {
-                    userStore.isLogged? 
-                    (
-                        <Menu.Item position='right'>
-                            <Icon name="user" />
-                        <Dropdown text={`${accountDetails?.email}`} pointing="top left" >
-                        <Dropdown.Menu  >
-                            <Dropdown.Item as={Link} to="/accountDetails" text="Szczegóły konta"/>
-                            <Dropdown.Item as={Link} to="/outposts" text="Mój panel placówek"/>
-                            {
-                                userStore.Role ===2 ?
-                                (
-                                 <Dropdown.Item as={Link} to="/adminDashboard" text="Panel Administracyjny"/>
-
-                                ):null
-                            }
-                            <Dropdown.Item onClick={logout} text="wyloguj"/>
-                        </Dropdown.Menu>
-                        </Dropdown>
-                        </Menu.Item>
-                    )
-                    : null
-
-                }
-               
-            </Container>
+            {userStore.isLogged ? (
+              <Menu.Item position="right">
+                <Icon name="user" />
+                <Dropdown text={`${accountDetails?.email}`} pointing="top left">
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                    icon="user"
+                      as={Link}
+                      to="/accountDetails"
+                      text={t("navbar.accountDetails")}
+                    />
+                    <Dropdown.Item
+                      icon="address book"
+                      as={Link}
+                      to="/outposts"
+                      text={t("navbar.myOutpostPanel")}
+                    />
+                    {userStore.Role === 2 ? (
+                      <Dropdown.Item
+                        icon="chess"
+                        as={Link}
+                        to="/adminDashboard"
+                        text={t("navbar.adminPanel")}
+                      />
+                    ) : null}
+                    <Dropdown.Item onClick={logout} icon="sign-out" text={t("navbar.logout")} />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+            ) : null}   
+            <Menu.Item>
+            <Dropdown
+              defaultValue={currentLanguage}
+              icon="language"
+              options={options}
+              className="language"
+              onChange={handleDropDownSelect}         
+            />
+        </Menu.Item>
+          </Container>
         </Menu>
-        </>
-    )
+      </>
+    );
 });

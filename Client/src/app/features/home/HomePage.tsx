@@ -1,13 +1,9 @@
-import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Icon } from "semantic-ui-react";
-import NavBar from "../../layout/NavBar";
+import { Icon } from "semantic-ui-react";
 import { useStore } from "../../stores/store";
-import LoginForm from "../user/LoginForm";
 import Logo from '../../../resources/logo.svg';
 import {useTranslation} from "react-i18next";
 import { observer } from "mobx-react-lite";
-import I18NextHttpBackend from "i18next-http-backend";
 
 export default observer(function HomePage()
 {
@@ -17,10 +13,10 @@ export default observer(function HomePage()
 
     return (
 
-        <div className='box background clean'>
+        <div className='box background clean flexCol'>
 
 
-            <div className='homePage clean'>
+            <div className='homePage clean '>
                 
                 <img src={Logo} alt="Polonicus Logo" style={{width:'250px'}} />
                 <h2 className='logoFont'>Polonicus App</h2>
@@ -33,20 +29,21 @@ export default observer(function HomePage()
                         </>)
                         :
                         (<>
-                            <h1>Przywracamy pamięć o korzeniach!</h1>    
+                            <h1>{t('welcome.welcome')}</h1>    
                             <Link to={`/chronicles`}>
-                                 <button className='whiteBtn'><Icon name='book'/>Przeczytaj kroniki</button>
+                                 <button className='whiteBtn'><Icon name='book'/>{t('welcome.readAll')}</button>
                             </Link>  
                             <Link to={`/login`}>
-                                 <button className='whiteBtn'><Icon name='user'/>Zaloguj się!</button>
+                                 <button className='whiteBtn'><Icon name='user'/>{t('welcome.login')}</button>
                             </Link>  
                             <Link to={`/register`}>
-                                 <div className='link'>Nie posiadasz konta ? Zarejestruj się!</div>
+                                 <div className='link'>{t('welcome.register')}</div>
                             </Link>  
 
                         </>)
                     }
             </div>
+            <div className="pb">System powstał na Wydziale Informatyki Politechniki Białostockiej.</div>
         </div>
         
     )

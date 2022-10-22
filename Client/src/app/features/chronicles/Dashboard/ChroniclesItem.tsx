@@ -1,9 +1,12 @@
 import { observer } from "mobx-react-lite";
-import React, { SyntheticEvent } from "react";
+import { SyntheticEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Icon, Item, Label } from "semantic-ui-react";
 import Chronicle from "../../../models/chronicle";
 import { useStore } from "../../../stores/store";
+import axios from "axios";
+import { Console } from "console";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -19,16 +22,25 @@ function ChroniclesItem({chronicle,target,chronicleDelete}:Props)
 {
   const { chronicleId, } = useParams<{ chronicleId: string }>();
   const {userStore,chronicleStore} =useStore();
+  const {baseURL} = chronicleStore;
   const {isLogged}=userStore;
+  const [t, i18n] = useTranslation('common');
 
-
-  
 return(
 <Item >
-            <Item.Image
-              size="tiny"
-              src="https://react.semantic-ui.com/images/wireframe/image.png"
-            ></Item.Image>
+              {
+                chronicle.imagePath === null || chronicle.imagePath === '0' ?
+                ( <Item.Image circular className="imageFlex"
+                  size="small"
+                  src="https://react.semantic-ui.com/images/wireframe/image.png"
+                ></Item.Image>)
+                :
+                ( <Item.Image circular className="imageFlex"
+                  size="small"
+                  src={`${baseURL}/${chronicle.imagePath}`}
+                ></Item.Image>)
+              }
+           
 
             <div className='content'>
               <Item.Header>{chronicle.name}</Item.Header>
@@ -49,12 +61,9 @@ return(
             </div>
             
             <Item.Extra>
-              <Button.Group vertical color='violet' floated="right">
+              <Button.Group vertical  floated="right">
                 
                 {
-                  //sprawdzenie czy id jest jego z kroniką zgodne 
-                  //czy ma permisje i
-                  //czy jest zalogowany
                   isLogged? (
                     <Button
                       id={chronicle.id}
@@ -64,7 +73,8 @@ return(
                         }
                       }
                       floated="right"
-                      content="Usuń"
+                      className="bgColor"
+                      content={t("chronicleItem.delete")}
                       icon="trash"
                     />)
                   :
@@ -74,16 +84,16 @@ return(
                   as={Link}
                   to={`/outposts/${chronicle.outpostId}/editChronicle/${chronicle.id}`}
                   floated="right"
-                  content="Edycja"
-                  color="red"
+                  content={t("chronicleItem.edit")}
+                  className="bgColor"
                   icon="edit"
                 />
                 <Button
                   as={Link}
                   to={`/outposts/${chronicle.outpostId}/chronicle/${chronicle.id}/details`}
                   floated="right"
-                  content="Wyświetl całość"
-                  color="violet"
+                  content={t("chronicleItem.display")}
+                  className="bgColor"
                   icon="level down alternate"
                 />
               </Button.Group>

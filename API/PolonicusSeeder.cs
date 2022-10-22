@@ -73,12 +73,11 @@ namespace Polonicus_API
                 {
                      Email="test@test.com",
                      FirstName="Adam",
-                     LastName="Kwazimoto",
+                     LastName="Kazimierczyk",
                      DateOfBirth=new DateTime(1981,10,12),
                      Nationality="Polish",
                      PasswordHash="AQAAAAEAACcQAAAAEDDVgY/aqYUKXEi7N3bV3baVuaX39MJwVxIps3BeK1Gw6HJx9khk8zccH4Pp6eBlmA=="
                 },
-                //21.11.2021 00:00:00
                 new User()
                 {
                      Email="admin@admin.com",

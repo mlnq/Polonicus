@@ -13,16 +13,22 @@ import { convertFromRaw, convertToRaw, EditorState,ContentState } from "draft-js
 import TextEditor from "../../../utils/TextEditor";
 import { observer } from "mobx-react-lite";
 import Chronicle from "../../../models/chronicle";
+import PhotoUploader from "../../../utils/PhotoUploader";
 
 
 export default observer(function ChronicleForm(){
     
         const {chronicleStore, utilsStore} = useStore();
         const {selectedChronicle,loadChronicle,loading,loadingInitial
-        ,createChronicle,updateChronicle} = chronicleStore;
+        ,createChronicle,updateChronicle,uploadImage,createChronicleWithImage} = chronicleStore;
         const {id} = useParams<{id: string}>();
         const history= useHistory();
         const {outpostId} = useParams<{outpostId: string}>();
+
+        const [files,setFiles]= useState<any>([]);
+
+
+
 
     const [chronicle,setChronicle]= useState({
         id:0,
@@ -38,18 +44,17 @@ export default observer(function ChronicleForm(){
             .then( ch=>{
                 //usuwa nulle
                 ch = JSON.parse(JSON.stringify(ch).replace(/:null/gi, ":\"\"")); 
-                console.log(ch);
+                // console.log(ch);
                 setChronicle(ch!) ;
                 try{
                     let obj = JSON.parse(ch!.description);
-                    console.log(convertFromRaw(obj))
+                    // console.log(convertFromRaw(obj))
                     _setEditorState(EditorState.createWithContent(convertFromRaw(obj)));
                 }
                 catch(e)
                 {
                     _setEditorState(EditorState.createWithContent(ContentState.createFromText(ch!.description)));
                 }
-                // _setEditorState(JSON.parse(ch!.description));
             });
     },[id,loadChronicle])
         
@@ -64,7 +69,6 @@ export default observer(function ChronicleForm(){
     function dataStringify(editorState:any)
     {
         const data = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-        // const obj = JSON.parse(data);
         return data;
     }
 
@@ -79,8 +83,10 @@ export default observer(function ChronicleForm(){
         if(!chronicle.id) 
         {
             chronicle.publicationDate= new Date();
-            console.log(chronicle.publicationDate)
-            createChronicle(chronicle,parseInt(outpostId)).then(()=> history.push(`/outposts/${outpostId}/chronicle`));
+            if(files !== null) {
+                // console.log('Plik rozny od nulla')
+                createChronicleWithImage(files[0],chronicle,parseInt(outpostId)).then(()=> history.push(`/outposts/${outpostId}/chronicle`));
+            }
         }
         else 
         {
@@ -104,17 +110,20 @@ export default observer(function ChronicleForm(){
             (
                 <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                     <MyFieldInput  placeholder="Nazwa" name="name" label='Tytuł kroniki'/> 
-
+                    <PhotoUploader files={files} setFiles={setFiles}/>
+                    <br></br>
                     <TextEditor
                         editorState={editorState}
                         setEditorState={_setEditorState}
                     />
+                    <br></br>
 
                     <ButtonGroup>
                         <Button
-                       //disabled={isSubmitting || !dirty || !isValid}
+                       disabled={isSubmitting || !dirty || !isValid}
                         loading={loading} positive content='Zatwierdź'/>
-                        <Button as={Link} to={`/outposts/${outpostId}/chronicle`} basic color='grey' content='Cofnij'/>
+                        <Button as={Link} to={`/outposts/${outpostId}/chronicle`} 
+                                basic color='grey' content='Cofnij'/>
                     </ButtonGroup>  
                 </Form>
             )}
@@ -123,40 +132,3 @@ export default observer(function ChronicleForm(){
     );
 });
 
-// export default observer (function OutpostDetails()
-// {
-
-//     const {chronicleStore} = useStore();
-//     const {selectedChronicle,loadChronicle} = chronicleStore;
-//     const {id} = useParams<{id: string}>();
-//     const {outpostId} = useParams<{outpostId: string}>();
-
-//     useEffect(()=>{
-//         if(id && outpostId) loadChronicle(parseInt(outpostId),parseInt(id));
-//     },[id,loadChronicle])
-    
-//     //obsługa w sytuacji kiedy outpost nie istnieje w kodzie
-//     if(!selectedChronicle) return <LoadingComponent/>;
-
-//     return (
-//         <Card fluid>
-//             <Card.Content>
-//                     <Card.Header>
-//                         {selectedChronicle?.name}
-//                     </Card.Header>
-//                     <Card.Meta>
-//                         {'Kartka z kalendarza dzień: '+ selectedChronicle?.publicationDate}
-//                     </Card.Meta>
-//                     <Card.Description>
-//                         {selectedChronicle?.description}
-//                     </Card.Description>
-//             </Card.Content>
-//             <Card.Content extra>
-//                 <Button.Group>
-//                         <Button as={Link} to={`/editOutpost/${id}`}  basic color='red' content='Edit'/>
-//                         <Button as={Link} to={`/outposts`} basic color='grey' content='cancel'/>
-//                 </Button.Group>
-//             </Card.Content>
-//         </Card>
-//     );
-// });
