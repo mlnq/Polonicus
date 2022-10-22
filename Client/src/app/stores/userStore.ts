@@ -76,7 +76,7 @@ export default class UserStore{
 
             this.setLoading(false);
             history.push('/outposts');
-            console.log(user);
+            // console.log(user);
         }
         catch(e){
             this.setLoading(false);
@@ -109,6 +109,18 @@ export default class UserStore{
             this.setLoading(false);
             runInAction(() =>{this.successfulAttempt=false; });
 
+            console.log(e);
+        }
+     }
+
+     deleteUser = async(email:String)=>{
+        this.setLoading(true);
+        try{
+            agent.Account.deleteUser(email);
+            this.setLoading(false);
+        }
+        catch(e){
+            this.setLoading(false);
             console.log(e);
         }
      }
@@ -157,7 +169,7 @@ export default class UserStore{
                 this.user.dateOfBirth = new Date(user.dateOfBirth!);
             });
 
-            console.log(user);
+            // console.log(user);
         }
         catch(e){
             console.log(e);

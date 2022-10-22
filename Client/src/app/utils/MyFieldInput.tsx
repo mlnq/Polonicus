@@ -15,7 +15,6 @@ export default function MyFieldInput(props: Props) {
   const [field, meta] = useField(props.name);
   const [visible,setVisible]=useState(false);
 
-  const xd = props.type;
   return (
     <Form.Field 
     

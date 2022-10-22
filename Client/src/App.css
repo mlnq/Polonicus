@@ -285,3 +285,88 @@ margin: 0  auto;
   cursor: pointer !important;
   pointer-events: auto !important;
 }
+
+/* country selection */
+.language
+{
+  background: transparent !important;
+  color: white!important;
+  border: 0px solid white !important;
+  border-radius: 4px;
+  z-index: 99999 !important;
+}
+
+
+/* image */
+.imageFlex{
+  display: flex !important;
+  margin: 0 auto !important;
+  border: #333 solid 5px !important;
+  border-radius: 2rem;
+}
+.imageFlexSmall{
+  display: flex !important;
+  margin: 0 auto !important;
+  /* box-shadow: #461616 0 0 10px; */
+  border: #b42726 solid 4px !important;
+  border-radius: 2rem;
+}
+
+/* chronicleItems */
+.bgColor{
+  background-color: #691819 !important;
+  color: white !important;
+  transition: 0.5s;
+}
+.bgColor:hover{
+  background-color: #991e1e !important;
+  color: white !important;
+}
+.imageCenter{
+  display: block!important;
+  /* justify-content: center!important; */
+}
+.containerImage{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+}
+
+/* dropImageBox */
+
+.dropBox{
+  border: #333 solid 5px;
+  border-radius: 25px;
+  width: auto;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 2s;
+}
+.dropBoxDrop{
+  border: #571718 dashed 3px;
+  border-radius: 25px;
+  width: auto;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 2s;
+
+}
+
+
+.flexCol{
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.pb{
+  color:#fff;
+  display: flex;
+  justify-content: center;
+  font-style: italic;
+  padding: 1em 0 1em 0;
+  box-shadow: 0 0 5em #461616;
+}

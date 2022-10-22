@@ -24,6 +24,7 @@ namespace Polonicus_API.Services
         public List<UserDto> GetAllUsers();
         public void UpgradeUser(string emailAdress);
         public void DowngradeUser(string emailAdress);
+        public void DeleteUser(string email);
     }
     public class AccountService : IAccountService
     {
@@ -153,48 +154,17 @@ namespace Polonicus_API.Services
             user.RoleId = 1;
             dbContext.SaveChanges();
         }
-        /*  public LoginDto GetToken(LoginDto dto)
-          {
-              var user = dbContext
-                  .Users
-                  .Include(u => u.Role)
-                  .FirstOrDefault(u => u.Email == dto.Email);
 
-              if (user is null) throw new BadRequestException("Invalid password or email adress");
+        public void DeleteUser(string email)
+        {
+            var user = dbContext
+                           .Users
+                           .FirstOrDefault(u => u.Email == email);
 
-              var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
-
-              if (result == PasswordVerificationResult.Failed)
-              {
-                  throw new BadRequestException("Invalid password or email adress");
-              }
-
-              var claims = new List<Claim>()
-              {
-                  new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                  new Claim(ClaimTypes.Name,$"{user.FirstName}, {user.LastName}"),
-                  new Claim(ClaimTypes.Role,user.Role.Name),
-              };
-
-              //klucz priv
-              var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authentication.JwtKey));
-
-              var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-              var expiration = DateTime.Now.AddDays(authentication.JwtExpirationDays);
-
-              var token = new JwtSecurityToken(
-                  authentication.JwtIssuer,
-                  authentication.JwtIssuer,
-                  claims,
-                  expires: expiration,
-                  signingCredentials: credentials
-                  );
-
-              var tokenHandler = new JwtSecurityTokenHandler();
-
-              return tokenHandler.WriteToken(token);
-          }*/
-
-
+            dbContext.Users.Remove(user);
+            dbContext.SaveChanges();
+        }
+       
+      
     }
 }

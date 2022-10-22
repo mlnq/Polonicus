@@ -1,0 +1,78 @@
+{
+    "welcome": {
+            "title": "Войти в панель управления Polonicus",
+            "welcome": "Мы снова возвращаем нашу историю!",
+            "readAll": "Читать хронику",
+            "login": "Авторизуйтесь!",
+            "register": "Еще нет аккаунта? Зарегистрируйтесь!"
+    },
+    
+    "guestDashboard": {
+            "allChronicles": "Все летописи",
+            "map": "Карта застав"
+    },
+    
+    "filters": {
+            "filter": "Фильтры",
+            "date": "Дата",
+            "chronicleTitle": "Название летописи",
+            "city": "Город",
+            "outpostName": "Название заставы"
+    },
+    
+    "map": {
+            "outpostName": "Название заставы:",
+            "city": "Город:",
+            "street": "улица:",
+            "popup": "Проверьте, откуда берутся рассказанные истории!"
+    },
+    "navbar": {
+            "accountDetails": "Детали аккаунта",
+            "myOutpostPanel": "Моя панель управления аванпостом",
+            "adminPanel": "Панель администратора",
+            "logout": "Выйти",
+            "chronicles": "Все летописи",
+            "map": "Карта"
+    },
+    "account": {
+            "email": "Адрес электронной почты:",
+            "age": "Возраст:",
+            "role": "Роли:",
+            "accountDetails":"Детали учетной записи"
+    },
+    "outpostItem": {
+            "chronicles": "Хроники заставы",
+            "preview": "Предварительный просмотр",
+            "confirm": "Да",
+            "deny": "Нет",
+            "confirmation": "Вы действительно хотите удалить этот форпост?",
+            "deleteInfo": "Удаление аванпоста",
+            "delete": "Удалить",
+            "add":"добавить хронику"
+    }
+    ,
+    "chronicleItem":{
+        "chronicles":"Хроники объекта",
+        "preview":"Предварительный просмотр",
+        "confirm":"Да",
+        "deny":"Нет",
+        "confirmation":"Вы уверены, что хотите удалить эту хронику?",
+        "deleteInfo":"Удалить журнал",
+        "delete":"Удалить",
+        "add":"Добавить журнал",
+        "formTitle":"Заголовок хроники",
+        "formPhoto":"Добавить фото",
+        "formIndicator":"Загрузить фото сюда",
+        "formIndicator2":"Удалить файл",
+        "edit":"Редактировать",
+        "display":"Отображение",
+        "saveAs":"Сохранить как Markdown ",
+        "return":"Возврат "
+},
+"tools":{
+      "Lista":"Lista",
+      "ListaNumerowana":"Lista numerowana",
+      "Cytat":"Cytat",
+      "ClearLine":"Normalna linia"  
+}
+    } 

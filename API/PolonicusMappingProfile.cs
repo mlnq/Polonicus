@@ -38,7 +38,6 @@ namespace Polonicus_API
                     m => m.PublicationDate, 
                     p => p.MapFrom(s => DateTime.Parse(s.PublicationDate,CultureInfo.InvariantCulture))
                 );
-            //s.PublicationDate,"yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture
             CreateMap<OutpostDto, Outpost>();
 
             CreateMap<User, UserDto>();

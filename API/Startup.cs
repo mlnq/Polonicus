@@ -58,17 +58,7 @@ namespace Polonicus_API
                 };
 
             });
-            /*  var key = new SymmetricSecurityKey
-              services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                  .AddJwtBearer(opt=>
-                  {
-                      opt.TokenValidationParameters = new TokenValidationParameters
-                      {
-                          ValidateIssuerSigningKey = true,
-                          IssuerSigningKey=
-                      }
-                  })*/
-
+           
             //Polityka CORS
             services.AddCors(
                 opt => opt.AddPolicy("CorsPolicy", policy =>
@@ -90,6 +80,7 @@ namespace Polonicus_API
             services.AddAutoMapper(this.GetType().Assembly);
 
             //Serwisy kontrolerów
+            services.AddScoped<ILocalImageService, LocalImageService>();
             services.AddScoped<IChronicleService,ChronicleService>();
             services.AddScoped<IOutpostService, OutpostService>();
             services.AddScoped<IAccountService,AccountService>();
@@ -117,6 +108,8 @@ namespace Polonicus_API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+
             //obs³uga b³êdów przed dzia³aniem apki
             app.UseMiddleware<ErrorHandlingMiddleware>();
 

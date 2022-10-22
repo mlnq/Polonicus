@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import { Button, Grid } from "semantic-ui-react";
 import LoadingComponent from "../../../layout/LoadingComponent";
@@ -14,6 +15,8 @@ export default observer(function ChroniclesDashBoard(){
     const {chronicleStore} = useStore(); 
     const {loadChronicles,selectedOutpostId,clearChronicle} = chronicleStore;
     const {outpostId} = useParams<{outpostId: string}>();
+    const [t, i18n] = useTranslation('common');
+
 
     useEffect(()=>{
         if(outpostId)
@@ -35,7 +38,11 @@ export default observer(function ChroniclesDashBoard(){
     return(
         <Grid>
             <Grid.Column width='4'>
-                <Button  fluid as={Link} to={`/outposts/${outpostId}/chronicleCreate`} icon='plus' color='violet' content='Dodaj kronike' />
+                <Button  fluid 
+                         as={Link} to={`/outposts/${outpostId}/chronicleCreate`} 
+                         icon='plus' className="bgColor"
+                         content={t('chronicleItem.add')} />
+                         
                 <ChronicleFilter/>
             </Grid.Column>
             <Grid.Column width='12'>

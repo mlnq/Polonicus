@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Polonicus_API.Models;
 using Polonicus_API.Services;
 using System;
@@ -13,10 +14,12 @@ namespace Polonicus_API.Controllers
     public class ChronicleController : ControllerBase
     {
         private readonly IChronicleService chronicleService;
+        private readonly ILocalImageService localImageService;
 
-        public ChronicleController(IChronicleService _chronicleService)
+        public ChronicleController(IChronicleService _chronicleService, ILocalImageService _localImageService)
         {
             chronicleService = _chronicleService;
+            localImageService = _localImageService;
         }
 
         [Route("api/outpost/{outpostId}/chronicle")]
@@ -25,8 +28,31 @@ namespace Polonicus_API.Controllers
         {
             
             var newChronicleId = chronicleService.Create(outpostId,dto);
-
             return Created($"/api/{outpostId}/chronicle/{newChronicleId}", new { id = newChronicleId });
+        }
+
+        //IDK
+        [Route("api/outpost/{outpostId}/chronicle/{chronicleId}/photo")]
+        [HttpPost]
+        public async Task<ActionResult> PostFile([FromRoute] int outpostId, [FromRoute] int chronicleId,IFormFile file)
+        {
+            if (file != null)
+            {
+                string imgUrl = await localImageService.UploadFile(file);
+                chronicleService.AppendImage(outpostId, chronicleId, imgUrl);
+
+                return Ok(imgUrl);
+            }
+
+            return NoContent();
+        }
+
+        [Route("api/outpost/{outpostId}/chronicle/{chronicleId}")]
+        [HttpPut]
+        public async Task<ActionResult> Put([FromRoute] int outpostId, [FromRoute] int chronicleId, [FromBody] ChronicleDto dto)
+        {
+            chronicleService.Update(outpostId, chronicleId, dto);
+            return Ok();
         }
 
         [Route("api/outpost/{outpostId}/chronicle")]
@@ -57,7 +83,6 @@ namespace Polonicus_API.Controllers
             return Ok(chronicle);
         }
 
-
         [Route("api/outpost/{outpostId}/chronicle/{chronicleId}")]
         [HttpGet]
         public ActionResult Get([FromRoute] int outpostId, [FromRoute] int chronicleId)
@@ -71,20 +96,14 @@ namespace Polonicus_API.Controllers
         [HttpDelete]
         public ActionResult Delete([FromRoute] int outpostId, [FromRoute] int chronicleId)
         {
-            chronicleService.Remove(outpostId,chronicleId);
+            string imgUrl = chronicleService.Delete(outpostId,chronicleId);
+            localImageService.DeleteFile(imgUrl);
 
             return NoContent();
         }
 
+       
 
-        /// @TODO
-        [Route("api/outpost/{outpostId}/chronicle/{chronicleId}")]
-        [HttpPut]
-        public ActionResult Put([FromRoute] int outpostId, [FromRoute] int chronicleId,[FromBody] ChronicleDto dto)
-        {
-            chronicleService.Update(outpostId, chronicleId,dto);
-            return Ok();
-        }
 
     }
 }

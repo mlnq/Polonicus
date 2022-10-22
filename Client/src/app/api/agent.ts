@@ -6,8 +6,6 @@ import UserCreds from "../models/userCreds";
 import UserRegister from "../models/userRegister";
 import { store } from "../stores/store";
 
-
-//axios jest za szybki temu tworze fake delay
 const sleep = (delay: number) =>{
     return new Promise((resolve)=>
         setTimeout(resolve,delay)
@@ -28,7 +26,7 @@ axios.defaults.baseURL = "http://localhost:5000/api";
 
 axios.interceptors.request.use(config =>{
     const token = store.utilsStore.token;
-    if (token) console.log('Token:'+token);
+    // if (token) console.log('Token:'+token);
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`
     }
@@ -42,7 +40,6 @@ error => {
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
 
-//<T> -> generyczne dodane w celu ograniczenia przelotu danych, dane mają być sprawdzane czy się pokrywają z interfejsem
 const request = {
     get: <T> (url:string) => axios.get<T>(url).then(responseBody),
     post: <T> (url:string, body: {}) => axios.post<T>(url,body).then(responseBody),
@@ -66,7 +63,18 @@ const Chronicles ={
     details: (id:number,outpostId: number) => request.get<Chronicle>(`/outpost/${outpostId}/chronicle/${id}`),
     create: (chronicle: Chronicle,outpostId:number) => request.post<{id:number}>(`/outpost/${outpostId}/chronicle`,chronicle),
     update: (chronicle: Chronicle,outpostId:number, id:number) => request.put<void>(`/outpost/${outpostId}/chronicle/${id}`,chronicle),
-    delete: (outpostId:number, id:number) => request.delete<void>(`/outpost/${outpostId}/chronicle/${id}`)
+    delete: (outpostId: number, id: number) => request.delete<void>(`/outpost/${outpostId}/chronicle/${id}`),
+    uploadImage: (file: Blob,outpostId:number,chronicleId:number) => {  
+        let formData= new FormData();
+        formData.append('File',file);
+        // console.log("File data")
+        // console.log(file)
+        // console.log("outpost ID :")
+        // console.log(outpostId)
+        return axios.post<any>(`/outpost/${outpostId}/chronicle/${chronicleId}/photo`,formData,{
+            headers:{"Content-type":"multipart/form-data"}
+        })
+    }
 }
 const Account ={
     getAll: () => request.get<User[]>('/account/getAll'),
@@ -75,6 +83,7 @@ const Account ={
     getUser: () => request.get<User>('/account'),
     upgradeUser: (user: UserCreds) => request.put<void>('/account/upgrade',user),
     downgradeUser: (user: UserCreds) => request.put<void>('/account/downgrade',user),
+    deleteUser: (email:String) => request.delete<void>(`/account/delete/${email}`),
 }
 
 const agent ={

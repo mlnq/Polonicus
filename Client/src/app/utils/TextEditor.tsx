@@ -1,8 +1,6 @@
 import React, { useEffect,useRef } from "react";
 import { convertToRaw, Editor, EditorState, RichUtils } from "draft-js";
 import ToolBar from "./ToolBar";
-import { Button, Form, TextArea } from "semantic-ui-react";
-import { observer } from "mobx-react-lite";
 
 
 interface Props {
@@ -18,7 +16,6 @@ export default function MyEditor({error,editorState,setEditorState}:Props) {
           minHeight: "30em",
           borderRadius: "5px",
           padding:'2em',
-          // overflowY: 'scroll',
           height: '400px',
           overflowY: 'auto'
         },
@@ -40,11 +37,7 @@ export default function MyEditor({error,editorState,setEditorState}:Props) {
       };
       
 
-  // const data = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-  // console.log(data);
-  // const xd ='duzo tekstu';
-  // console.log(xd);
-  // localStorage.setItem(TEXT_EDITOR_ITEM, data);
+
   
   const editor = useRef<any>(null);
 
@@ -52,9 +45,6 @@ export default function MyEditor({error,editorState,setEditorState}:Props) {
     editor.current.focus();
   }
 
-//  useEffect(() => {
-//     focusEditor();
-//   }, []);
 
 
   const handleToggleClick = (inlineStyle:any) => {
@@ -102,11 +92,7 @@ export default function MyEditor({error,editorState,setEditorState}:Props) {
       />
 
       </div>
-      {/* <Button icon='undo' disabled={editorState.getUndoStack().size <= 0}
-              onMouseDown={() => setEditorState(EditorState.undo(editorState))}></Button>
-      <Button icon='redo' disabled={editorState.getRedoStack().size <= 0}
-             onMouseDown={() => setEditorState(EditorState.redo(editorState))}></Button>
-      */}
+  
       </> 
   );
 

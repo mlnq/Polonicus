@@ -1,23 +1,15 @@
 import { LatLngExpression } from "leaflet";
-import { relative } from "path";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { Map, Marker, TileLayer, Popup, MapLayer } from "react-leaflet";
 import { MapContainer, Marker, TileLayer, Popup,ZoomControl } from "react-leaflet";
-import L from 'leaflet';
-import { Button, Icon, Label } from "semantic-ui-react";
-import pointer from '../../../resources/blueMarker.png'
-import Markere from './Markere'
-import { getSVG } from "./getSVG";
 import { useStore } from "../../stores/store";
-import { Link } from "react-router-dom";
-import LoadingComponent from "../../layout/LoadingComponent";
 import { observer } from "mobx-react-lite";
+import { useTranslation } from "react-i18next";
 
-interface Props{
-}
- 
 
-export default observer(function OutpostMap({}:Props) {
+export default observer(function OutpostMap() {
+
+  const [t, i18n] = useTranslation('common');
 
   const {outpostStore,utilsStore} = useStore();
   const {outpostRegistry,loadAllOutposts,outposts,allOutposts} = outpostStore;
@@ -59,9 +51,9 @@ export default observer(function OutpostMap({}:Props) {
                           <Marker position={[Number(outpost.coord_latitude),Number(outpost.coord_longtiude)]} key={outpost.id}>
                             <Popup>
                                 <div style={{display:"flex",flexDirection:'column'}}>
-                                  <span><strong>Nazwa placówki: </strong>{outpost.name}</span>
-                                  <span><strong>Miasto: </strong> {outpost.city}</span>
-                                  <span><strong>Ulica: </strong> {outpost.street}</span>
+                                  <span><strong>{t("map.outpostName")}</strong>{outpost.name}</span>
+                                  <span><strong>{t("map.city")}</strong> {outpost.city}</span>
+                                  <span><strong>{t("map.street")}</strong> {outpost.street}</span>
                                   {/* <Button as={Link} to={``}>Przeczytaj kroniki</Button> */}
                                 </div>
                             </Popup>

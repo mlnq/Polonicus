@@ -1,6 +1,84 @@
 {
 "welcome":{
-        "title":"Przejdz do Twoich placówek"
+        "title":"Przejdz do Twoich placówek",
+        "welcome":"Przywracamy pamięć o korzeniach!",
+        "readAll":"Przeczytaj kroniki",
+        "login":"Zaloguj się!",
+        "register":"Nie posiadasz konta ? Zarejestruj się!"
+},
+
+"guestDashboard":{      
+        "allChronicles":"Wszystkie kroniki",
+        "map":"Mapa placówek"
+},
+
+"filters":{
+        "filter":"Filtry",
+        "date":"Data",
+        "chronicleTitle":"Tytuł kroniki",
+        "city":"Miejscowość",
+        "outpostName":"Nazwa placówki"
+},
+"map":{
+        "outpostName":"Nazwa placówki: ",
+        "city":"Miejscowość: ",
+        "street":"Ulica: ",
+        "popup":"Sprawdź skąd pochodzą opowiedziane historie!"
+},
+
+"navbar":{
+        "accountDetails":"Szczegóły konta",
+        "myOutpostPanel":"Mój panel placówek",
+        "adminPanel":"Panel Administracyjny",
+        "logout":"Wyloguj",
+        "chronicles":"Wszystkie Kroniki",
+        "map":"Mapa"
+},
+"account":{
+        "email":"Adres email: ",
+        "age":"Wiek: ",
+        "role":"Rola: ",
+        "accountDetails":"Szczegóły konta"
+},
+
+"outpostItem":{
+        "chronicles":"Kroniki placówki",
+        "preview":"Podgląd",
+        "confirm":"Tak",
+        "deny":"Nie",
+        "confirmation":"Czy napewno chcesz usunąć daną placówkę ?",
+        "deleteInfo":"Usuwanie placówki",
+        "delete":"Usuń",
+        "add":"Dodaj placówke"
+},
+
+"chronicleItem":{
+        "chronicles":"Kroniki placówki",
+        "preview":"Podgląd",
+        "confirm":"Tak",
+        "deny":"Nie",
+        "confirmation":"Czy na pewno chcesz usunąć daną kronikę ?",
+        "deleteInfo":"Usuwanie kroniki",
+        "delete":"Usuń",
+        "add":"Dodaj kronikę",
+        "formTitle":"Tytuł kroniki",
+        "formPhoto":"Dodaj zdjęcie",
+        "formIndicator":"Wrzuć tutaj zdjęcie",
+        "formIndicator2":"Upuść plik",
+        "edit":"Edycja",
+        "display":"Wyświetl",
+        "saveAs":"Zapisz jako Markdown",
+        "return":"Powrót "
+},
+"tools":{
+      "Lista":"Lista",
+      "ListaNumerowana":"Lista numerowana",
+      "Cytat":"Cytat",
+      "ClearLine":"Normalna linia"  
 }
 
+
 }
+
+
+

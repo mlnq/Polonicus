@@ -14,13 +14,14 @@ import ChroniclesDashBoard from './app/features/chronicles/dashboard/ChroniclesD
 import ChroniclesVisitorDashBoard from './app/features/chronicles/dashboard/ChroniclesVisitorDashboard';
 import ChroniclesDetails from './app/features/chronicles/details/ChroniclesDetails';
 import ChronicleForm from './app/features/chronicles/form/ChronicleForm';
-import OutpostMap from './app/features/mapOutposts/OutpostMap';
 import LoginForm from './app/features/user/LoginForm';
 import RegisterForm from './app/features/user/RegisterForm';
 import AccountDetails from './app/features/user/AccountDetails';
 import AdminDashboard from './app/features/user/admin/AdminDashboard';
 import OutpostMapPanel from './app/features/mapOutposts/OutpostMapPanel';
 import NotFound from './app/features/errors/NotFound';
+
+//System powstał na Wydziale Informatyki Politechniki Białostockiej.
 
 function App() {
   const location = useLocation();

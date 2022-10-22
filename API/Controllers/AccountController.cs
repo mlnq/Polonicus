@@ -67,5 +67,12 @@ namespace Polonicus_API.Controllers
             accountService.DowngradeUser(userDto.Email);
             return Ok();
         }
+
+        [HttpDelete("delete/{email}")]
+        public ActionResult DeleteUser([FromRoute] string email)
+        {
+            accountService.DeleteUser(email);
+            return Ok();
+        }
     }
 }

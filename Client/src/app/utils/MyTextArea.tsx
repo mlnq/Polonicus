@@ -11,7 +11,6 @@ interface Props {
   rows: number;
   children?: React.ReactNode;
   editorState?:any;
-  // setEditorState:(state:any) => void;
 }
 
 export default function MyField(props: Props) {
@@ -22,13 +21,7 @@ export default function MyField(props: Props) {
     
     error={meta.touched && !!meta.error}>
       <label>{props.label}</label>
-      {/* <TextEditor 
-      editorState={editorState}
-      // setEditorState={setEditorState}
-      {...field} {...props} error={(meta.error && meta.touched)? false:true} /> */}
-        
-      {/* <textarea {...field} {...props} /> */}
-     {meta.error && meta.touched ? <Label color='red' basic>{meta.error}</Label> : null}
+         {meta.error && meta.touched ? <Label color='red' basic>{meta.error}</Label> : null}
     </Form.Field>
   );
 }

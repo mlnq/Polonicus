@@ -12,6 +12,8 @@ namespace Polonicus_API.Entities
         public string Description { get; set; }
         public DateTime PublicationDate { get; set; }
 
+        public string ImagePath { get; set; }
+
         public int OutpostId { get; set; }
         public virtual Outpost Outpost { get; set; }
 

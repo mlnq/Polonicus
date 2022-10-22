@@ -1,11 +1,12 @@
-import { render } from "@testing-library/react";
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
-import { Button, ButtonGroup, Card, CardContent, Header, Icon } from "semantic-ui-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Card,Icon } from "semantic-ui-react";
 import { useStore } from "../../../stores/store";
 
 export default observer( function ChroniclesFilter(){
 
+    const [t, i18n] = useTranslation('common');
 
     const {chronicleStore}= useStore();
     
@@ -17,7 +18,7 @@ export default observer( function ChroniclesFilter(){
             <Card>
                  <div style={{display:'flex !important'}}>
                  <div className="filterBox">
-                     <h3 >Filtry </h3>
+                     <h3 >{t("filters.filter")}</h3>
                  </div>
                     <Card.Description column >
                     <div className="ui button basic fluid flexLeft" 
@@ -34,7 +35,7 @@ export default observer( function ChroniclesFilter(){
                         <Icon name="arrow down"/>
                        )
                    }
-                    Data
+                   {t("filters.date")}
                </div>
                <div className="ui button basic fluid flexLeft" 
                     onClick={()=>{
@@ -50,7 +51,7 @@ export default observer( function ChroniclesFilter(){
                         <Icon name="arrow down"/>
                        )
                    }
-                   Tytuł kroniki
+                   {t("filters.chronicleTitle")}
                </div>
                     </Card.Description>
                  </div>

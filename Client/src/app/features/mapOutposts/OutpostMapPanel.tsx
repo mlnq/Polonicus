@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
-import { Button, Card, Header, Icon } from "semantic-ui-react";
-import { useStore } from "../../stores/store";
+import  {  useState } from "react";
+import { useTranslation } from "react-i18next";
 import OutpostMap from "./OutpostMap";
 
 
 export default observer(function OutpostMapPanel(){
 
+    const [t, i18n] = useTranslation('common');
 
     const [visibility, setVisibility] = useState(true);
 
@@ -22,7 +22,7 @@ export default observer(function OutpostMapPanel(){
                 (
                     <div className='roundedMapDiv'>
                             <a  href="#" onClick={() => setVisibility(!visibility)}><h3>X</h3></a>
-                        <h3> Sprawdź skąd pochodzą opowiedziane historie!</h3>
+                        <h3> {t("map.popup")}</h3>
                     </div>
                 )
                 :
